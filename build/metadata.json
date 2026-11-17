@@ -8,8 +8,8 @@
   "package_id": "com.inotesapp.inotes",
   "target_sdk": 36,
   "minimum_sdk": 24,
-  "delivery": "NoteApple.xapk (provided in ChatGPT conversation)",
-  "xapk_sha256": "9384db07ae4f494b18ff60d32f6962cf5deeb897d754009542eda9af837d5271",
+  "delivery": "NoteApple.apk (standalone APK merged from supplied XAPK splits)",
+  "standalone_apk_sha256": "b71b2a02434a12cdbc68b551b328297a33d62ca46d5cf12250fb7f3feabf4db4",
   "locale_added": [
     "he-IL",
     "he"
@@ -19,14 +19,14 @@
   "placeholder_mismatches": 0,
   "transcription": "Already present in upstream 2.2.4; UI strings localized, speech-recognition engine unchanged.",
   "premium": "Original purchase and entitlement checks are unchanged.",
-  "signature_scheme": "APK Signature Scheme v2, RSA/SHA-256",
-  "signing_certificate_sha256": "CC:72:CC:9F:A6:21:98:D5:20:C3:61:74:2D:34:48:E6:CF:9D:43:9C:34:EA:AD:BA:7B:DF:B2:8C:97:E9:E1:86",
-  "split_apks": [
-    "com.inotesapp.inotes.apk",
-    "config.arm64_v8a.apk",
-    "config.en.apk",
-    "config.fr.apk",
-    "config.mdpi.apk"
+  "package_fixes": [
+    "Cleared base manifest requiredSplitTypes after merging ABI and MDPI split content",
+    "Aligned all uncompressed native libraries to 16 KiB",
+    "Correct APK Signature Scheme v2 digest chunking across the three APK sections",
+    "Corrected RSA PKCS#1 SHA-256 APK v2 algorithm ID to 0x0103"
   ],
-  "repository_note": "The public repository stores patch handoff metadata. The signed binary and private keystore are delivered separately; the private keystore is not committed."
+  "signature_scheme": "APK Signature Scheme v2, RSA PKCS#1 v1.5 with SHA-256 (0x0103)",
+  "signing_certificate_sha256": "CC:72:CC:9F:A6:21:98:D5:20:C3:61:74:2D:34:48:E6:CF:9D:43:9C:34:EA:AD:BA:7B:DF:B2:8C:97:E9:E1:86",
+  "abi": "arm64-v8a",
+  "testing": "Local ZIP, Flutter asset, 16 KiB library alignment, v2 digest, and RSA signature checks passed; no physical device install test was available."
 }
