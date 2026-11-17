@@ -163,7 +163,7 @@ object NoteExports {
         val body = normalized.lineSequence().drop(if (normalized.startsWith("#")) 1 else 0).joinToString("\n").trim()
         return NoteItem(
             title = title.ifBlank { "פתק שיובא" },
-            bodyHtml = "<p>§{escapeHtml(body).replace("\n", "<br>")}</p>",
+            bodyHtml = "<p>" + escapeHtml(body).replace("\n", "<br>") + "</p>",
             folderId = folderId,
             tags = Regex("#([\\p{L}\\p{N}_-]+)").findAll(text).map { it.groupValues[1] }.distinct().toList()
         )

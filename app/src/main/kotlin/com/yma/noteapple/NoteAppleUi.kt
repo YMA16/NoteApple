@@ -24,8 +24,8 @@ private const val PAGE_FOLDERS = "folders"
 private const val PAGE_NOTES = "notes"
 private const val PAGE_EDITOR = "editor"
 private const val PAGE_SETTINGS = "settings"
-private const val SMART_ALL = "__all__"
-private const val SMART_TRASH = "__trash__"
+internal const val SMART_ALL = "__all__"
+internal const val SMART_TRASH = "__trash__"
 
 @Composable
 fun NoteAppleApp(activity: MainActivity) {

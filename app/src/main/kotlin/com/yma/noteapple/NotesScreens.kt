@@ -133,7 +133,7 @@ fun NotesScreen(
             } else {
                 LazyColumn(
                     Modifier.fillMaxSize(),
-                    contentPadding = PaddingValues(horizontal = 15.dp, vertical = 6.dp, bottom = 100.dp),
+                    contentPadding = PaddingValues(start = 15.dp, top = 6.dp, end = 15.dp, bottom = 100.dp),
                     verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
                     if (pinned.isNotEmpty()) {
@@ -498,7 +498,7 @@ private fun HtmlRichEditor(
         modifier = modifier,
         factory = {
             EditText(context).apply {
-                setTextColor(android.graphics.Color.WHITE.takeIf { isSystemInDarkThemeSafe(context) } ?: android.graphics.Color.DKGRAY)
+                setTextColor(android.graphics.Color.WHITE.takeIf { isSystemDarkThemeSafe(context) } ?: android.graphics.Color.DKGRAY)
                 textSize = 17f
                 setPadding(5, 10, 5, 10)
                 setBackgroundColor(android.graphics.Color.TRANSPARENT)
@@ -579,7 +579,7 @@ fun SettingsScreen(
         }
         LazyColumn(
             Modifier.fillMaxSize(),
-            contentPadding = PaddingValues(horizontal = 17.dp, vertical = 8.dp, bottom = 24.dp),
+            contentPadding = PaddingValues(start = 17.dp, top = 8.dp, end = 17.dp, bottom = 24.dp),
             verticalArrangement = Arrangement.spacedBy(15.dp)
         ) {
             item {
@@ -652,7 +652,7 @@ private fun SettingsCard(title: String, content: @Composable ColumnScope.() -> U
 
 @Composable
 private fun SettingAction(title: String, onClick: () -> Unit) {
-    TextButton(onClick = onClick, modifier = Modifier.fillMaxWidth(), contentPadding = PaddingValues(vertical = 7.dp)) {
+    TextButton(onClick = onClick, modifier = Modifier.fillMaxWidth(), contentPadding = PaddingValues(horizontal = 10.dp, vertical = 7.dp)) {
         Text(title, modifier = Modifier.fillMaxWidth(), color = MaterialTheme.colorScheme.primary)
     }
 }
