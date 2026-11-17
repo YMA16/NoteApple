@@ -24,8 +24,8 @@ private const val PAGE_FOLDERS = "folders"
 private const val PAGE_NOTES = "notes"
 private const val PAGE_EDITOR = "editor"
 private const val PAGE_SETTINGS = "settings"
-internal const val SMART_ALL = "__all__"
-internal const val SMART_TRASH = "__trash__"
+private const val SMART_ALL = "__all__"
+private const val SMART_TRASH = "__trash__"
 
 @Composable
 fun NoteAppleApp(activity: MainActivity) {
@@ -85,7 +85,8 @@ fun NoteAppleApp(activity: MainActivity) {
             if (editorUnlockPassword.isNotBlank() && !note.locked) NoteSecurity.lock(note, editorUnlockPassword.toCharArray()) else note
         fun autoSave(note: NoteItem) {
             if (note.id > 0 || note.title.isNotBlank() || note.bodyHtml.isNotBlank() || note.checklist.isNotEmpty() || note.attachments.isNotEmpty()) {
-                draft = activity.database.save(protectedNote(note).copy(updatedAt = System.currentTimeMillis()))
+                val saved = activity.database.save(protectedNote(note).copy(updatedAt = System.currentTimeMillis()))
+                draft = note.copy(id = saved.id, updatedAt = saved.updatedAt)
                 refresh()
             }
         }
