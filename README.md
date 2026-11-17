@@ -1,26 +1,42 @@
-# NoteApple for Android
+# NoteApple Android
 
-An original Android notes app with a familiar, minimal notes workflow. The app is built with Kotlin and Jetpack Compose and stores notes locally in SQLite.
+An independent native Android note-taking app inspired by the visible workflow and feature set of “Notes - iOS Style Notepad” by Baday Production. It is not the original application and does not use its private source code or assets.
 
-## Features
+## Current build
 
-- Hebrew RTL interface, note list, search, note editor, pinning and folders.
-- System/light/dark appearance and six accent palettes.
-- Export all notes as JSON, TXT, or ZIP (containing JSON and TXT).
-- Import a JSON backup.
-- Google Drive backup and restore using the private `appDataFolder` area and Google's runtime authorization flow.
-- Custom dark notebook launcher icon.
+- Kotlin + Jetpack Compose, Hebrew / RTL, dark-first interface.
+- iOS-like folder and note lists, search, pinning, sorting, subfolders, tags, and Recently Deleted (30 days).
+- Auto-saving note editor with basic rich-text formatting, highlights, checklist items, page backgrounds, and a simple expression calculator.
+- Image/document attachments, opening attachments through Android apps, audio recording, and Android speech-recognition insertion.
+- Per-note password protection using PBKDF2 + AES-GCM; optional app passcode lock.
+- JSON v3 backup with folders, note metadata, checklists, tags, lock state, and attachment bytes embedded as Base64. The importer also understands the first NoteApple JSON v1 format.
+- ZIP backup containing the full JSON backup plus TXT, Markdown, HTML exports. Individual TXT, Markdown, HTML, and PDF exports are also available.
+- Google Drive manual backup/restore in the private appDataFolder.
+- Home-screen quick-note widget.
+- System / light / dark modes and six accent colours.
 
 ## Build
 
-Open the project in Android Studio with Android SDK 35, or run `gradle assembleDebug` with Gradle 8.9 and JDK 17. The GitHub Actions workflow builds a debug APK on pushes to `main` and uploads it as the `NoteApple-debug-apk` workflow artifact.
+Open in Android Studio with JDK 17 and Android SDK 35. Or run:
 
-## Google Drive setup
+```bash
+gradle assembleDebug
+```
 
-To use Drive backup, enable the Google Drive API in a Google Cloud project and configure an OAuth Android client for application id `com.yma.noteapple` using the SHA-1 fingerprint of the APK signing certificate. The app requests `https://www.googleapis.com/auth/drive.appdata` only when the user taps a Drive backup or restore action. A Drive backup is private to this app and is not listed alongside ordinary Drive files.
+GitHub Actions builds a debug APK on each push to `main` and uploads it as the `NoteApple-debug-apk` artifact.
 
-For the APK built by GitHub Actions, its signing certificate fingerprint can be displayed with `apksigner verify --print-certs app-debug.apk`. Configure that fingerprint in the Google Cloud Android OAuth client before using Drive with that build. A locally built debug APK uses the local Android debug keystore and therefore has a different fingerprint.
+## Google Drive
 
-## Privacy
+Enable the Google Drive API in a Google Cloud project. Create an Android OAuth client for package `com.yma.noteapple` using the SHA-1 fingerprint of the signing certificate for the APK you install. For an APK built by GitHub Actions, inspect the APK certificate with `apksigner verify --print-certs app-debug.apk` and use that fingerprint. A locally built debug APK has a different signing certificate.
 
-Notes remain on the device unless the user explicitly exports them or runs a Google Drive backup. Exports are written only after the user selects a destination.
+The current UI exposes manual backup and restore. It does not run scheduled background Drive backups yet.
+
+## Backup format
+
+JSON v3 is an object with `format`, `schemaVersion`, `exportedAt`, `folders`, and `notes`. Attachments include `dataBase64` so that a JSON export is portable between devices. Import offers merge or replace. The v1 importer accepts the previous `format: noteapple-backup` structure and legacy note fields `body` / `folder`.
+
+## Notes / limitations
+
+This is an independent implementation, not a byte-for-byte copy. The current build provides the functions listed above; advanced features such as automatic Drive scheduling, iCloud synchronization, full document-edge scanning, complete table editing, custom-font import, and biometric app unlock are not implemented yet. Android's speech-recognition provider determines whether transcription works offline on a device.
+
+Notes are stored on the device unless the user explicitly exports them or uses Drive backup.
