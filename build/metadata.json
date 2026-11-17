@@ -1,0 +1,30 @@
+{
+  "app_name": "NoteApple",
+  "upstream_app": "Notes - iOS Style Notepad",
+  "upstream_publisher": "Baday Production",
+  "upstream_version": "2.2.4",
+  "upstream_version_code": 1093,
+  "package_id": "com.inotesapp.inotes",
+  "target_sdk": 36,
+  "minimum_sdk": 24,
+  "xapk_file": "NoteApple.xapk",
+  "xapk_sha256": "9898bc9462813b403142be782d278cb9e950171f544362a5e31883182d72e4b1",
+  "locale_added": [
+    "he-IL",
+    "he"
+  ],
+  "translated_english_string_leaves": 1186,
+  "missing_translation_keys": 0,
+  "placeholder_mismatches": 0,
+  "transcription": "Already present in upstream 2.2.4; its UI strings are localized in the Hebrew resource.",
+  "premium": "Original purchase and entitlement checks are unchanged.",
+  "signature_scheme": "APK Signature Scheme v2, RSA/SHA-256",
+  "signing_certificate_sha256": "CC:72:CC:9F:A6:21:98:D5:20:C3:61:74:2D:34:48:E6:CF:9D:43:9C:34:EA:AD:BA:7B:DF:B2:8C:97:E9:E1:86",
+  "split_apks": [
+    "com.inotesapp.inotes.apk",
+    "config.arm64_v8a.apk",
+    "config.en.apk",
+    "config.fr.apk",
+    "config.mdpi.apk"
+  ]
+}

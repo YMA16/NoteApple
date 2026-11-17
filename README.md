@@ -1,42 +1,38 @@
-# NoteApple Android
+# NoteApple — Hebrew localization patch
 
-An independent native Android note-taking app inspired by the visible workflow and feature set of “Notes - iOS Style Notepad” by Baday Production. It is not the original application and does not use its private source code or assets.
+This repository now tracks the NoteApple localization patch for the third-party Android app **Notes - iOS Style Notepad 2.2.4** (Baday Production).
 
-## Current build
+The earlier experimental Kotlin/Compose NoteApple project has been removed from the current branch. This project is a resource-level patch of the supplied, compiled Flutter XAPK; it is not a replacement implementation or the original app source.
 
-- Kotlin + Jetpack Compose, Hebrew / RTL, dark-first interface.
-- iOS-like folder and note lists, search, pinning, sorting, subfolders, tags, and Recently Deleted (30 days).
-- Auto-saving note editor with basic rich-text formatting, highlights, checklist items, page backgrounds, and a simple expression calculator.
-- Image/document attachments, opening attachments through Android apps, audio recording, and Android speech-recognition insertion.
-- Per-note password protection using PBKDF2 + AES-GCM; optional app passcode lock.
-- JSON v3 backup with folders, note metadata, checklists, tags, lock state, and attachment bytes embedded as Base64. The importer also understands the first NoteApple JSON v1 format.
-- ZIP backup containing the full JSON backup plus TXT, Markdown, HTML exports. Individual TXT, Markdown, HTML, and PDF exports are also available.
-- Google Drive manual backup/restore in the private appDataFolder.
-- Home-screen quick-note widget.
-- System / light / dark modes and six accent colours.
+## Delivered build
 
-## Build
+- File: `NoteApple.xapk` (delivered separately in the conversation)
+- App display name: **NoteApple**
+- Original package ID retained: `com.inotesapp.inotes`
+- Original app version: 2.2.4 (build 1093)
+- Target SDK: 36; minimum SDK: 24
+- Split set: base, ARM64, English, French, and MDPI density
+- UI layout, styling, icon artwork, colors, and app behavior are unchanged except the system app label.
+- Hebrew localization resources `he-IL.json` and `he.json` were added to Flutter assets and registered in `AssetManifest.bin`.
+- The Hebrew locale was checked against all 1,186 leaf strings in the original `en-US.json`; every key is present and interpolation placeholders are preserved.
 
-Open in Android Studio with JDK 17 and Android SDK 35. Or run:
+## Voice transcription
 
-```bash
-gradle assembleDebug
-```
+Version 2.2.4 already contains Google's on-device speech-recognition transcription flow. The transcription screens and language/model messages were included in the Hebrew localization. Whether transcription can run depends on the Android device and the speech-recognition model/service available for the selected language.
 
-GitHub Actions builds a debug APK on each push to `main` and uploads it as the `NoteApple-debug-apk` artifact.
+## Premium and licensing
 
-## Google Drive
+This patch does **not** remove purchase checks, bypass subscriptions or lifetime purchases, alter Google Play Billing, or grant paid entitlements. Premium features continue to require a valid purchase or entitlement.
 
-Enable the Google Drive API in a Google Cloud project. Create an Android OAuth client for package `com.yma.noteapple` using the SHA-1 fingerprint of the signing certificate for the APK you install. For an APK built by GitHub Actions, inspect the APK certificate with `apksigner verify --print-certs app-debug.apk` and use that fingerprint. A locally built debug APK has a different signing certificate.
+## Signing
 
-The current UI exposes manual backup and restore. It does not run scheduled background Drive backups yet.
+All five APKs inside the delivered XAPK were signed with one new NoteApple RSA/SHA-256 APK Signature Scheme v2 certificate. The private PKCS#12 keystore is delivered separately to the user and is not stored in this public repository. Keep the keystore and its password safe; future updates to this package must be signed with the same key.
 
-## Backup format
+Certificate SHA-256:
+`CC:72:CC:9F:A6:21:98:D5:20:C3:61:74:2D:34:48:E6:CF:9D:43:9C:34:EA:AD:BA:7B:DF:B2:8C:97:E9:E1:86`
 
-JSON v3 is an object with `format`, `schemaVersion`, `exportedAt`, `folders`, and `notes`. Attachments include `dataBase64` so that a JSON export is portable between devices. Import offers merge or replace. The v1 importer accepts the previous `format: noteapple-backup` structure and legacy note fields `body` / `folder`.
+## Important installation note
 
-## Notes / limitations
+Because the modified package retains the original package ID but uses a new signing certificate, Android will not install it as an in-place update over the official app. Back up notes first; uninstalling the official build may remove its local data. This XAPK also contains ARM64 splits, so it is intended for ARM64 Android devices.
 
-This is an independent implementation, not a byte-for-byte copy. The current build provides the functions listed above; advanced features such as automatic Drive scheduling, iCloud synchronization, full document-edge scanning, complete table editing, custom-font import, and biometric app unlock are not implemented yet. Android's speech-recognition provider determines whether transcription works offline on a device.
-
-Notes are stored on the device unless the user explicitly exports them or uses Drive backup.
+The delivered binary is the installable artifact; this repository records the patch metadata and handoff information. The original proprietary Flutter source is not part of this repository.
